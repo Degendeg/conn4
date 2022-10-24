@@ -11,8 +11,8 @@ const server = http.createServer(async (req, resp) => {
     resp.end(await readFile('index.html'))
   } else if (req.url === '/client.js') {
     resp.end(await readFile('client.js'))
-  } else if (req.url === '/vue.js') {
-    resp.end(await readFile('vue.js'))
+  } else if (req.url === '/vue.min.js') {
+    resp.end(await readFile('vue.min.js'))
   } else {
     resp.end()
   }
