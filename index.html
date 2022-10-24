@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>connect4</title>
+    <meta charset="utf-8" />
+    <style>
+      body {
+        font-family: Verdana, Tahoma, sans-serif;
+        text-align: center;
+        width: 100%;
+        background: #F9F9F9;
+        overflow-x: hidden;
+        overflow-y: scroll;
+      }
+
+      ::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: #D7D7D7;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: #C6C6C6;
+      }
+
+      h1 {
+        font-family: "Gill Sans", sans-serif;
+        color: rgb(140, 140, 140);
+        font-size: 50px;
+      }
+
+      table {
+        border-collapse: collapse;
+        overflow: hidden;
+        margin: 0 auto;
+      }
+
+      td {
+        border: 10px solid rgb(190, 190, 190);
+        height: 50px;
+        width: 50px;
+        text-align: center;
+        font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        font-size: xx-large;
+      }
+
+      button.button {
+        display: inline-block;
+        padding: 1em 5em;
+        text-align: center;
+        color: black;
+        font-family: sans-serif;
+        font-weight: bold;
+        top: 0;
+        text-transform: uppercase;
+        border-radius: 50px;
+        border: 2px solid rgba(0, 0, 0, 0.5);
+        border-bottom: 8px solid rgba(0, 0, 0, 0.5);
+        background: white;
+        transition: 0.1s;
+        position: relative;
+        text-decoration: none;
+		cursor: pointer;
+      }
+
+      button.button:active {
+        top: 8px;
+        border-bottom-width: 2px;
+        background: rgba(0, 0, 0, 0.1);
+        box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.5);
+        color: rgba(0, 0, 0, 0.5);
+        ;
+      }
+
+      button.button span:after {
+        content: " ?";
+        opacity: 0;
+        transition: 0.1s;
+      }
+
+      button.button:active span:after {
+        content: " ?";
+        opacity: 1;
+        transition: 0.1s;
+      }
+    </style>
+    <script src='vue.js'></script>
+  </head>
+  <body>
+    <h1>Connect 4</h1>
+    <div id='game'></div>
+    <script src='client.js'></script>
+  </body>
+</html>

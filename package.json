@@ -1,0 +1,26 @@
+{
+  "name": "connect4",
+  "version": "1.0.0",
+  "description": "connect4",
+  "main": "Browser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MNoumanAbbasi/Connect4Game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": ""
+  },
+  "homepage": "",
+  "dependencies": {
+    "async-limiter": "^2.0.0",
+    "node-fetch": "^3.2.10",
+    "nodemon": "^2.0.20",
+    "ws": "^7.2.0"
+  }
+}
