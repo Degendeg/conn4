@@ -37,25 +37,22 @@ const playGame = (player1, player2) => {
 }
 
 new ws.Server({ server }).on('connection', client => {
-  if (firstClient) { // if both players have been connected
+  if (firstClient) {
     secondClient = client
     console.log('Player 2 connected. Initiating game.')
-    secondClient.send('2') // signalling that you are player 2
+    secondClient.send('2')
 
-    // now telling both players to start game
     firstClient.send('3')
     secondClient.send('3')
 
     playGame(firstClient, secondClient)
 
-	// reset clients
     firstClient = undefined
     secondClient = undefined
   } else {
-    // only one player connected so far
     firstClient = client
     console.log('Player 1 connected. Waiting for Player 2.')
-    client.send('1') // signalling that you are player 1
+    client.send('1')
   }
 
   client.on('close', () => {

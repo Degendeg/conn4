@@ -17,11 +17,11 @@ new Vue({
         </div>
     `,
   data: {
-    board: [], // stores the entire game state
-    hoverColors: [], // stores the highlight color of each cell
-    myPiece: '', // piece assigned to this player. Player 1: X. Player 2: O.
-    oppPiece: '', // piece assigned to opponent player.
-    infoMsg: '', // infoMsg displayed at bottom of board
+    board: [],
+    hoverColors: [],
+    myPiece: '',
+    oppPiece: '',
+    infoMsg: '',
     gameStarted: false,
     gameEnded: false,
     myTurn: false,
@@ -32,14 +32,12 @@ new Vue({
       this.ws.send(JSON.stringify(col))
     },
 
-    // The reactive version of doing board[row][col] = pieceColor
     updateBoard(board, row, col, piece) {
       let newRow = board[row].slice(0)
       newRow[col] = piece
       this.$set(board, row, newRow)
     },
 
-    // Adds the piece on the board and returns the row and column where its added
     addPieceOnBoard(board, col, piece) {
       for (let i = 0; i < ROW_NUM; i++) {
         if (board[i][col] === ' ') {
@@ -67,7 +65,7 @@ new Vue({
         let myChoicePos = this.addPieceOnBoard(this.board, col, this.myPiece)
         this.myTurn = false
         if (check4Connected(this.board, this.myPiece)) { // if player wins
-          myChoicePos.push('Win') // send win signal along as well
+          myChoicePos.push('Win')
           console.log('You won!')
           this.infoMsg = 'You WON!'
           this.gameEnded = true
@@ -89,6 +87,7 @@ new Vue({
       for (let c = 0; c < COL_NUM; c++) {
         let tempBoard2 = JSON.parse(JSON.stringify(tempBoard1))
         this.addPieceOnBoard(tempBoard2, c, this.oppPiece)
+		/* below gives tips regarding a move that can be winnable next */
         // if (check4Connected(tempBoard2, this.oppPiece)) {
         // this.$set(this.hoverColors, col, 'lightcoral')
         // return
@@ -97,11 +96,10 @@ new Vue({
       this.$set(this.hoverColors, col, 'palegreen')
     },
 
-    // Restarts game by resetting the entire board (both this and opponent's)
     restartGame() {
       this.board = Array(ROW_NUM).fill().map(() => Array(COL_NUM).fill(' ')); // resetting the board
       this.gameEnded = false
-      this.sendChoice('Reset') // asking opponent to reset its board
+      this.sendChoice('Reset')
       this.infoMsg = 'Game restarted'
     }
   },
@@ -115,16 +113,16 @@ new Vue({
       if (!this.gameStarted) {
         if (event.data === '1') { // if this is player 1
           console.log('Connected with Server.\nYou are player 1. Waiting for player 2...')
-          this.myPiece = 'X' // player 1 assigned color 'X'
+          this.myPiece = 'X'
           this.oppPiece = 'O'
           this.myTurn = true
           this.infoMsg = 'Waiting for other player...'
         } else if (event.data === '2') { // if this is player 2
           console.log('Connected with Server.\nYou are player 2.')
-          this.myPiece = 'O' // player 2 assigned color 'O'
+          this.myPiece = 'O'
           this.oppPiece = 'X'
           this.myTurn = false
-        } else if (event.data === '3') { // 3 is indication from server to start game
+        } else if (event.data === '3') {
           console.log('Starting Game.')
           this.gameStarted = true
           this.infoMsg = ''
@@ -136,7 +134,7 @@ new Vue({
           this.board = Array(ROW_NUM).fill().map(() => Array(COL_NUM).fill(' '));
           this.gameEnded = false
           this.infoMsg = 'Game restarted by opponent'
-        } else { // continue to receive opponents choices
+        } else {
           this.infoMsg = ''
           console.log('Opponent choice of col:', oppMsg[1])
           this.addPieceOnBoard(this.board, oppMsg[1], this.oppPiece)
@@ -153,7 +151,6 @@ new Vue({
 
 }).$mount('#game')
 
-// Checks if the 4 pieces are connected on the board
 const check4Connected = (board, piece) => {
   // checking vertically
   for (let r = 0; r < ROW_NUM - 3; r++) {
@@ -173,7 +170,7 @@ const check4Connected = (board, piece) => {
       }
     }
   }
-  // checking diagonally down way
+  // checking diagonally down
   for (let i = 3; i < ROW_NUM; i++) {
     for (let j = 0; j < COL_NUM - 3; j++) {
       if (board[i][j] === piece && board[i - 1][j + 1] === piece &&
@@ -181,7 +178,7 @@ const check4Connected = (board, piece) => {
         return true;
     }
   }
-  // checking diagonally up way
+  // checking diagonally up
   for (let i = 3; i < ROW_NUM; i++) {
     for (let j = 3; j < COL_NUM; j++) {
       if (board[i][j] === piece && board[i - 1][j - 1] === piece &&
