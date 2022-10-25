@@ -3,18 +3,18 @@ const COL_NUM = 7
 
 new Vue({
   template: `
-        <div>
-            <p v-if='myTurn'><strong>Your</strong> turn</p>
-            <p v-else>Opponent's turn</p>
-            <table id='gameboard'>
-                <tr v-for='row in board.slice().reverse()'>
-                    <td v-for='(value,c) in row' v-on:click='makeMove' v-on:mouseover='highlightCol'
-                    v-on:mouseleave='resetColor' v-bind:style="{'background-color': hoverColors[c]}">{{value}}</td>
-                </tr>
-            </table>
-            <p>{{infoMsg}}</p>
-            <button class='button' v-if='gameEnded' v-on:click='restartGame'>Restart Game</button>
-        </div>
+      <div>
+          <p v-if='myTurn'><strong>Your</strong> turn</p>
+          <p v-else>Opponent's turn</p>
+          <table id='gameboard'>
+              <tr v-for='row in board.slice().reverse()'>
+                  <td v-for='(value,c) in row' v-on:click='makeMove' v-on:mouseover='highlightCol'
+                  v-on:mouseleave='resetColor' v-bind:style="{'background-color': hoverColors[c]}">{{value}}</td>
+              </tr>
+          </table>
+          <p>{{infoMsg}}</p>
+          <button class='button' v-if='gameEnded' v-on:click='restartGame'>Restart Game</button>
+      </div>
     `,
   data: {
     board: [],
@@ -87,7 +87,9 @@ new Vue({
       for (let c = 0; c < COL_NUM; c++) {
         let tempBoard2 = JSON.parse(JSON.stringify(tempBoard1))
         this.addPieceOnBoard(tempBoard2, c, this.oppPiece)
-		/* below gives tips regarding a move that can be winnable next */
+        /* 
+          below gives tips regarding a move that can be winnable next
+        */
         // if (check4Connected(tempBoard2, this.oppPiece)) {
         // this.$set(this.hoverColors, col, 'lightcoral')
         // return
@@ -107,6 +109,7 @@ new Vue({
   created() {
     this.board = Array(ROW_NUM).fill().map(() => Array(COL_NUM).fill(' '));
     this.hoverColors = Array(ROW_NUM).fill('white');
+    this.resetColor()
   },
   mounted() {
     this.ws.onmessage = event => {

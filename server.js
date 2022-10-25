@@ -7,14 +7,19 @@ const readFile = file => new Promise(resolve =>
   fs.readFile(file, 'utf-8', (err, data) => resolve(data)))
 
 const server = http.createServer(async (req, resp) => {
-  if (req.url === '/') {
-    resp.end(await readFile('index.html'))
-  } else if (req.url === '/client.js') {
-    resp.end(await readFile('client.js'))
-  } else if (req.url === '/vue.min.js') {
-    resp.end(await readFile('vue.min.js'))
-  } else {
-    resp.end()
+  switch (req.url) {
+    case '/':
+      resp.end(await readFile('index.html'));
+      break;
+    case '/client.js':
+      resp.end(await readFile('client.js'));
+      break;
+    case '/vue.min.js':
+      resp.end(await readFile('vue.min.js'));
+      break;
+    default:
+      resp.end();
+      break;
   }
 });
 
